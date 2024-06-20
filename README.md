@@ -12,7 +12,7 @@ reddcoincore/reddcoind
 [gh_last_release_svg]: https://img.shields.io/github/v/release/reddcoin-project/docker-reddcoind?sort=semver
 [gh_last_release_url]: https://github.com/reddcoin-project/docker-reddcoind/releases/latest
 
-[Docker Image Size]: https://img.shields.io/microbadger/image-size/reddcoincore/reddcoind.svg
+[Docker Image Size]: https://img.shields.io/docker/image-size/reddcoincore/reddcoind
 [Docker Pulls Count]: https://img.shields.io/docker/pulls/reddcoincore/reddcoind.svg?style=flat
 [lnd-docker-hub]: https://hub.docker.com/r/reddcoincore/reddcoind
 
