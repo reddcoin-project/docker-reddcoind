@@ -150,7 +150,7 @@ services:
   reddcoin:
     container_name: reddcoind
     user: 1000:1000
-    image: reddcoincore/reddcoind:v25.0
+    image: reddcoincore/reddcoind:v4.22.7
     volumes:
       - ./reddcoin:/data/.reddcoin
     restart: on-failure
