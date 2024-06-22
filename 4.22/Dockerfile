@@ -212,6 +212,7 @@ LABEL maintainer="info@reddcoin.com"
 RUN sed -i 's|http://dl-cdn.alpinelinux.org|https://alpine.global.ssl.fastly.net|g' /etc/apk/repositories
 
 RUN apk add --no-cache \
+        bash \
         boost-filesystem \
         boost-thread \
         libevent \
@@ -246,6 +247,20 @@ EXPOSE 45443 55443 18443
 # ZMQ ports (for transactions & blocks respectively)
 EXPOSE 28332 28333
 
-ENTRYPOINT ["reddcoind"]
+ENV RPC_SERVER 1
+ENV RPC_USERNAME rpcusername
+ENV RPC_PASSWORD rpcpassword
+ENV RPC_PORT 45443
+ENV RPC_ALLOW_IP 0.0.0.0/0
+ENV TESTNET=0
+ENV ZMQ_PUBRAWBLOCK=tcp://0.0.0.0:28332
+ENV ZMQ_PUBRAWTX=tcp://0.0.0.0:28333
 
-CMD ["-zmqpubrawblock=tcp://0.0.0.0:28332", "-zmqpubrawtx=tcp://0.0.0.0:28333"]
+WORKDIR /$DIR/$USER
+
+COPY --chown=$USER:$USER --chmod=0755 ./setup.sh .
+
+# remove windows EOL from script
+RUN sed -i 's/\r$//' ./setup.sh
+
+CMD [ "./setup.sh" ]
