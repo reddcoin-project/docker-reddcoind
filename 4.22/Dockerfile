@@ -14,7 +14,7 @@ ARG VER_ALPINE=3.12
 
 # $USER name, and data $DIR to be used in the `final` image
 ARG USER=reddcoind
-ARG DIR=/data
+ARG DIR=/home
 
 # Choose where to get reddcoind sources from, options: release, git
 #   NOTE: Only `SOURCE=git` can be used for RC releases
@@ -224,17 +224,17 @@ COPY  --from=builder /opt/reddcoin-$VERSION/bin/reddcoin*  /usr/local/bin/
 
 # NOTE: Default GID == UID == 1000
 RUN adduser --disabled-password \
-            --home "$DIR/" \
+            --home "/$DIR/$USER/" \
             --gecos "" \
             "$USER"
 
 USER $USER
 
 # Prevents `VOLUME $DIR/.reddcoind/` being created as owned by `root`
-RUN mkdir -p "$DIR/.reddcoin/"
+RUN mkdir -p "/$DIR/$USER/.reddcoin/"
 
 # Expose volume containing all `reddcoind` data
-VOLUME $DIR/.reddcoin/
+VOLUME /$DIR/$USER/.reddcoin/
 
 # REST interface
 EXPOSE 8080
