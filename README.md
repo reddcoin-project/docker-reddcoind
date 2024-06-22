@@ -154,6 +154,12 @@ services:
     volumes:
       - ./reddcoin:/data/.reddcoin
     restart: on-failure
+    environment:
+    - RPC_SERVER=1
+    - RPC_USERNAME=[create a user name]
+    - RPC_PASSWORD=[UseALongAndHardToGuessPassWord]
+    - RPC_PORT=45443
+    - RPC_ALLOW_IP=127.0.0.1/0
     stop_grace_period: 15m30s
     ports:
       - "45443:45443"
