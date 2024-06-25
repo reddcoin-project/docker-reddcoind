@@ -15,8 +15,10 @@ if [ ! -f $HOME_PATH$CONFIG_PATH ]; then
   if [[ $TESTNET == 1 ]]; then
     echo "[test]" >> $HOME_PATH$CONFIG_PATH
     echo "rpcport=$RPC_PORT" >> $HOME_PATH$CONFIG_PATH
+    echo "rpcbind=$RPC_BIND" >> $HOME_PATH$CONFIG_PATH
   else
     echo "rpcport=$RPC_PORT" >> $HOME_PATH$CONFIG_PATH
+    echo "rpcbind=$RPC_BIND" >> $HOME_PATH$CONFIG_PATH
   fi
 else
   echo "$HOME_PATH$CONFIG_PATH is already existent..."
