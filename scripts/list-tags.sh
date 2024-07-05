@@ -9,8 +9,8 @@ set -eo pipefail
 main() {
   declare repo="$1"
 
-  curl -s "https://registry.hub.docker.com/v1/repositories/$repo/tags" \
-    | jq -r '.[].name' \
+  curl -s "https://hub.docker.com/v2/repositories/$repo/tags" \
+    | jq -r '.results|.[]|.name' \
     | grep '^v.*' \
     | grep -v '\-build' \
     | tr -s '-' '~' \
