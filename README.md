@@ -64,6 +64,7 @@ This repo builds [`reddcoind`] in an [auditable way](https://github.com/reddcoin
 
 > **NOTE:** For an always up-to-date list see: https://hub.docker.com/repository/docker/reddcoincore/reddcoind/tags
 
+* `v4.22.8`
 * `v4.22.7`
 
 
@@ -150,7 +151,7 @@ services:
   reddcoin:
     container_name: reddcoind
     user: 1000:1000
-    image: reddcoincore/reddcoind:v4.22.7
+    image: reddcoincore/reddcoind:v4.22.8
     volumes:
       - ./reddcoin:/data/.reddcoin
     restart: on-failure
