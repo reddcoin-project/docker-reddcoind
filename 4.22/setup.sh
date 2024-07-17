@@ -2,6 +2,7 @@
 set -ex
 HOME_PATH=/home/reddcoind
 CONFIG_PATH=/.reddcoin/reddcoin.conf
+BOOTSTRAP=bootstrap.tar.gz
 if [ ! -f $HOME_PATH$CONFIG_PATH ]; then
   echo "server=$RPC_SERVER" >> $HOME_PATH$CONFIG_PATH
   echo "rpcuser=$RPC_USERNAME" >> $HOME_PATH$CONFIG_PATH
@@ -33,8 +34,7 @@ if [ -f "$HOME_PATH/bootstrap/"$BOOTSTRAP ]; then
       echo "Skipping Bootstrap file cause of already existent blocks in $HOME_PATH/.reddcoin"
     else
       cd "$HOME_PATH/.reddcoin" && rm -rf blocks chainstate database
-      apt-get update && apt-get install -y unzip
-      unzip "$HOME_PATH/bootstrap/$BOOTSTRAP" -d "$HOME_PATH/.reddcoin"
+      tar -zxvf "$HOME_PATH/bootstrap/$BOOTSTRAP" -C "$HOME_PATH/.reddcoin"
     fi
   elif [[ $TESTNET == 1 ]]; then
     echo "Pointing to TESTNET"
@@ -42,8 +42,7 @@ if [ -f "$HOME_PATH/bootstrap/"$BOOTSTRAP ]; then
       echo "Skipping Bootstrap file cause of already existent blocks in $HOME_PATH/.reddcoin/testnet3"
     else
       cd "$HOME_PATH/.reddcoin/testnet3" && rm -rf blocks chainstate database
-      apt-get update && apt-get install -y unzip
-      unzip "$HOME_PATH/bootstrap/$BOOTSTRAP" -d "$HOME_PATH/.reddcoin/testnet3"
+      tar -zxvf "$HOME_PATH/bootstrap/$BOOTSTRAP" -C "$HOME_PATH/.reddcoin/testnet3"
     fi
   fi
 else
