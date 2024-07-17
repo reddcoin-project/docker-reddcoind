@@ -14,7 +14,7 @@ ARG VER_ALPINE=3.12
 
 # $USER name, and data $DIR to be used in the `final` image
 ARG USER=reddcoind
-ARG DIR=/home
+ARG DIR=home
 
 # Choose where to get reddcoind sources from, options: release, git
 #   NOTE: Only `SOURCE=git` can be used for RC releases
