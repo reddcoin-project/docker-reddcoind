@@ -27,7 +27,7 @@ This repo builds [`reddcoind`] in an [auditable way](https://github.com/reddcoin
 
 #### Details
 
-* **All [`git-tags`]** <small>(and most commits)</small> **are signed** by `D8CA1776EB9265491D07CE67F546ECBEA809CB18`
+* **All [`git-tags`]** <small>(and most commits)</small> **are signed** by `ABEDC4489B9188E45C2342A82E91240B293BA5D3`
 * **All [`git-tags`]** <small>(and most commits)</small> **are [`opentimestamps`]-ed**
 * **All builds aim to be maximally auditable.**  After `git tag push`, the entire process is automated, with each step printed, and the code aiming to be easy to follow
 * All builds are based on [Alpine]
