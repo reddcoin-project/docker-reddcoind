@@ -64,6 +64,7 @@ This repo builds [`reddcoind`] in an [auditable way](https://github.com/reddcoin
 
 > **NOTE:** For an always up-to-date list see: https://hub.docker.com/repository/docker/reddcoincore/reddcoind/tags
 
+* `v4.22.9rc1`
 * `v4.22.8`
 * `v4.22.7`
 
