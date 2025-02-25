@@ -145,7 +145,7 @@ jobs:
       - name: Setup environment
         run: |
           echo ::set-env name=SLUG::"$(echo "$DOCKER_REPOSITORY/$APP")"
-          echo ::set-env name=VERSION::"$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\3|")"
+          echo ::set-env name=VERSION::"$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\2|")"
           echo ::set-env name=BUILD::"$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\6|")"
 
       - name: Download all build artifacts
