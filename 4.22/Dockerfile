@@ -3,8 +3,8 @@
 # VERSION of Reddcoin Core to be build
 #   NOTE: Unlike our other images this one is NOT prefixed with `v`,
 #           as many things (like download URLs) use this form instead.
-ARG VERSION=4.22.8
-ARG COMMIT=1d0e612e3f0c
+ARG VERSION=4.22.9
+ARG COMMIT=46803883aab2
 
 # CPU architecture to build binaries for
 ARG ARCH
@@ -61,22 +61,22 @@ ARG COMMIT
 # Download sigs
 # ADD https://reddcoincore.org/bin/reddcoin-core-$VERSION/SHA256SUMS.asc  ./
 # Download checksums
-ADD https://download.reddcoin.com/bin/reddcoin-core-$VERSION/x86_64-linux-gnu/SHA256SUMS.part ./SHA256SUMS
+ADD https://download.reddcoin.com/bin/reddcoin-core-$VERSION/SHA256SUMS ./SHA256SUMS
 
 # Download source code (intentionally different website than checksums)
 # uncomment
 #ADD https://reddcoin.org/bin/reddcoin-core-$VERSION/reddcoin-$VERSION.tar.gz ./
-ADD https://download.reddcoin.com/bin/reddcoin-core-$VERSION/dist-archive/reddcoin-$COMMIT.tar.gz ./dist-archive/
+ADD https://download.reddcoin.com/bin/reddcoin-core-$VERSION/reddcoin-$VERSION.tar.gz ./
 
 # Verify that hashes are signed with the previously imported key
 # RUN gpg --verify SHA256SUMS.asc SHA256SUMS
 
 # Verify that downloaded source-code archive matches exactly the hash that's provided
-RUN grep "  dist-archive/reddcoin-$COMMIT.tar.gz\$" SHA256SUMS | sha256sum -c -
+RUN grep "  reddcoin-$VERSION.tar.gz\$" SHA256SUMS | sha256sum -c -
 
 # Extract
-RUN tar -xzf "./dist-archive/reddcoin-$COMMIT.tar.gz" && \
-    rm  -f   "./dist-archive/reddcoin-$COMMIT.tar.gz"
+RUN tar -xzf "reddcoin-$VERSION.tar.gz" && \
+    rm  -f   "reddcoin-$VERSION.tar.gz"
 
 
 
@@ -159,7 +159,7 @@ COPY  --from=berkeleydb /opt/  /opt/
 WORKDIR /reddcoin-$VERSION/
 
 # Copy reddcoin source (downloaded & verified in previous stages)
-COPY  --from=preparer /reddcoin-$COMMIT/  ./
+COPY  --from=preparer /reddcoin-$VERSION/  ./
 
 ENV REDDCOIN_PREFIX /opt/reddcoin-$VERSION
 
