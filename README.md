@@ -104,7 +104,7 @@ Then to start reddcoind, run:
 
 ```bash
 docker run  -it  --rm  --detach \
-    -v ~/.reddcoin:/data/.reddcoin \
+    -v ~/.reddcoin:/home/reddcoind/.reddcoin \
     -p 45444:45444 \
     -p 45443:45443 \
     -p 18444:18444 \
@@ -157,7 +157,7 @@ services:
     user: 1000:1000
     image: reddcoincore/reddcoind:v4.22.9.4
     volumes:
-      - ./reddcoin:/data/.reddcoin
+      - ./reddcoin:/home/reddcoind/.reddcoin
     restart: on-failure
     environment:
     - RPC_SERVER=1
@@ -173,7 +173,7 @@ services:
       - "28333:28333"
 ```
 First, ensure that the `reddcoin/` folder is in the directory containing docker-compose.yml.
-Then, Docker Compose will mount the `reddcoin/` folder to `/data/.reddcoin`.
+Then, Docker Compose will mount the `reddcoin/` folder to `/home/reddcoind/.reddcoin`.
 
 #### Troubleshooting
 
