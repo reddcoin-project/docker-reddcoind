@@ -50,4 +50,6 @@ else
 fi
 
 [ -f "$HOME_PATH/.reddcoin/.lock" ] && rm -f "$HOME_PATH/.reddcoin/.lock"
-/usr/local/bin/reddcoind
+
+# exec so reddcoind replaces this shell as PID 1 and receives SIGTERM from `docker stop` for a clean shutdown
+exec /usr/local/bin/reddcoind
