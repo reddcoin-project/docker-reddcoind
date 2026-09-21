@@ -1,7 +1,6 @@
 name: Update Docker Hub README everytime it changes on master
 
 env:
-    ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     APP: reddcoind
     DOCKER_REPOSITORY: reddcoincore
 on:
@@ -20,7 +19,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Setup Environment
-        run: echo ::set-env name=SLUG::"$(echo "$DOCKER_REPOSITORY/$APP")"
+        run: echo "SLUG=$DOCKER_REPOSITORY/$APP" >> "$GITHUB_ENV"
 
       - name: Sync README.md and Description to Docker Hub
         uses: meeDamian/sync-readme@v1.0.6

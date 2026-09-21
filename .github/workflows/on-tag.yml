@@ -3,7 +3,6 @@ name: Build & deploy on git tag push
 env:
   APP: reddcoind
   DOCKER_REPOSITORY: reddcoincore
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
   # Capture groups within $TAG_FMT:
   #   \1 => TAG       vX.Y.Z[.P]+build<N>
@@ -54,10 +53,11 @@ jobs:
             exit 1
           fi
 
-          echo ::set-env name=DIR::"$DIR"
-
-          echo ::set-env name=TAG::"$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\1|")"
-          echo ::set-env name=BUILD::"$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\6|")"
+          {
+            echo "DIR=$DIR"
+            echo "TAG=$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\1|")"
+            echo "BUILD=$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\6|")"
+          } >> "$GITHUB_ENV"
 
       - name: Print ENV VARs set above
         run: |
@@ -138,15 +138,21 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build
 
+    permissions:
+      contents: write
+
     env:
       DOCKER_CLI_EXPERIMENTAL: enabled
 
     steps:
       - name: Setup environment
         run: |
-          echo ::set-env name=SLUG::"$(echo "$DOCKER_REPOSITORY/$APP")"
-          echo ::set-env name=VERSION::"$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\2|")"
-          echo ::set-env name=BUILD::"$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\6|")"
+          {
+            echo "SLUG=$DOCKER_REPOSITORY/$APP"
+            echo "TAG=$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\1|")"
+            echo "VERSION=$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\2|")"
+            echo "BUILD=$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\6|")"
+          } >> "$GITHUB_ENV"
 
       - name: Download all build artifacts
         uses: actions/download-artifact@v4
@@ -202,15 +208,14 @@ jobs:
           (cd docker-images;  sha256sum *) >> ./SHA256SUMS
           cat ./SHA256SUMS
 
+      # `gh` creates the release as a draft, and publishes it only after all assets upload successfully
       - name: Upload images to Github Release
-        uses: meeDamian/github-release@2.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: ${{ env.VERSION }}
-          body: |
-            This release packages `reddcoind` to be on par with https://github.com/reddcoin-project/reddcoin/releases/tag/${{ env.VERSION }}
-          prerelease: true
-          gzip: false
-          files: >
-            docker-images/*
-            SHA256SUMS
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create "$TAG" docker-images/* SHA256SUMS \
+            --verify-tag \
+            --prerelease \
+            --title "$VERSION" \
+            --notes "This release packages \`reddcoind\` to be on par with https://github.com/reddcoin-project/reddcoin/releases/tag/$VERSION"
