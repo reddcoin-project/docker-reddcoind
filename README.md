@@ -64,6 +64,7 @@ This repo builds [`reddcoind`] in an [auditable way](https://github.com/reddcoin
 
 > **NOTE:** For an always up-to-date list see: https://hub.docker.com/repository/docker/reddcoincore/reddcoind/tags
 
+* `v4.22.9.4`
 * `v4.22.9`
 * `v4.22.9rc2`
 * `v4.22.9rc1`
@@ -78,7 +79,7 @@ This repo builds [`reddcoind`] in an [auditable way](https://github.com/reddcoin
 First pull the image from [Docker Hub]:
 
 ```bash
-docker pull reddcoincore/reddcoind:v4.22.9
+docker pull reddcoincore/reddcoind:v4.22.9.4
 ```
 
 > **NOTE:** Running above will automatically choose native architecture of your CPU.
@@ -88,7 +89,7 @@ docker pull reddcoincore/reddcoind:v4.22.9
 Or, to pull a specific CPU architecture:
 
 ```bash
-docker pull reddcoincore/reddcoind:v4.22.9-arm64v8
+docker pull reddcoincore/reddcoind:v4.22.9.4-arm64v8
 ```
 
 #### Start
@@ -109,7 +110,7 @@ docker run  -it  --rm  --detach \
     -p 18444:18444 \
     -p 28333:28333 \
     --name reddcoind \
-    reddcoincore/reddcoind:v4.22.9
+    reddcoincore/reddcoind:v4.22.9.4
 ```
 
 That will run reddcoind such that:
@@ -154,7 +155,7 @@ services:
   reddcoin:
     container_name: reddcoind
     user: 1000:1000
-    image: reddcoincore/reddcoind:v4.22.9
+    image: reddcoincore/reddcoind:v4.22.9.4
     volumes:
       - ./reddcoin:/data/.reddcoin
     restart: on-failure
