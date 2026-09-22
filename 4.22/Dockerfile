@@ -250,12 +250,10 @@ EXPOSE 45443 55443 18443
 # ZMQ ports (for transactions & blocks respectively)
 EXPOSE 28332 28333
 
+# RPC_USERNAME, RPC_PASSWORD, RPC_BIND and RPC_ALLOW_IP are deliberately unset: by default RPC only
+#   listens inside the container and uses cookie auth. Set all four to expose it (see README.md)
 ENV RPC_SERVER 1
-ENV RPC_USERNAME rpcusername
-ENV RPC_PASSWORD rpcpassword
 ENV RPC_PORT 45443
-ENV RPC_ALLOW_IP 0.0.0.0/0
-ENV RPC_BIND 0.0.0.0
 ENV TESTNET=0
 ENV ZMQ_PUBRAWBLOCK=tcp://0.0.0.0:28332
 ENV ZMQ_PUBRAWTX=tcp://0.0.0.0:28333
