@@ -165,8 +165,11 @@ ENV REDDCOIN_PREFIX /opt/reddcoin-$VERSION
 
 RUN ./autogen.sh
 
+# musl gives threads other than the main one a 128 KiB stack, and scrypt (used to check proof of work
+#   since 4.22.9.5) puts a 128 KiB buffer on the stack, so reddcoind segfaults on startup without this.
+#   `-z stack-size` sets the default thread stack size that musl uses.
 # TODO: Try to optimize on passed params
-RUN ./configure LDFLAGS=-L/opt/db4/lib/ CPPFLAGS=-I/opt/db4/include/ \
+RUN ./configure LDFLAGS="-L/opt/db4/lib/ -Wl,-z,stack-size=1048576" CPPFLAGS=-I/opt/db4/include/ \
     CXXFLAGS="-O2" \
     --prefix="$REDDCOIN_PREFIX" \
     --disable-man \
