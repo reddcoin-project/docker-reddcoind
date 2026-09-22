@@ -3,7 +3,7 @@
 # VERSION of Reddcoin Core to be build
 #   NOTE: Unlike our other images this one is NOT prefixed with `v`,
 #           as many things (like download URLs) use this form instead.
-ARG VERSION=4.22.9.4
+ARG VERSION=4.22.9.5
 ARG COMMIT=46803883aab2
 
 # CPU architecture to build binaries for
